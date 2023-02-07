@@ -5,17 +5,38 @@ export default function Weather(props) {
   const [weather, setWeatherData] = useState({ ready: false });
 
   function handleResponse(response) {
-    console.log(response.data);
     setWeatherData({
       ready: true,
       city: response.data.name,
-      date: "Tuesday, 21:55",
+      date: new Date(response.data.dt * 1000),
       temperature: Math.round(response.data.main.temp),
       wind: Math.round(response.data.wind.speed),
       humidity: response.data.main.humidity,
       description: response.data.weather[0].description,
       icon: `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
     });
+  }
+
+  function formattedDate() {
+    let days = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    const day = days[weather.date.getDay()];
+    let hours = weather.date.getHours();
+    if (hours < 10) {
+      hours = `0${hours}`;
+    }
+    let minutes = weather.date.getMinutes();
+    if (minutes < 10) {
+      minutes = `0${minutes}`;
+    }
+    return `${day}, ${hours}:${minutes}`;
   }
 
   if (weather.ready) {
@@ -51,7 +72,7 @@ export default function Weather(props) {
             <h1>{weather.city}</h1>
           </div>
           <div className="Time">
-            Last updated: <span>{weather.date}</span>
+            Last updated: <span>{formattedDate()}</span>
           </div>
           <div className="text-capitalize">{weather.description}</div>
           <div className="weather">
