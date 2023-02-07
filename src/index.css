@@ -43,20 +43,23 @@ th {
   margin: 0 auto;
 }
 .current-place {
-  margin: 30px 20px;
+  margin: 30px 20px 0 20px;
   text-align: left;
 }
+
 .current-place img {
   height: 64px;
   width: 64px;
   vertical-align: top;
   margin-right: 5px;
-  margin-top: 5px;
+}
+.weather {
+  margin-top: 20px;
 }
 
 .currentTemp {
   display: inline;
-  font-size: 44px;
+  font-size: 64px;
   line-height: 1em;
 }
 
