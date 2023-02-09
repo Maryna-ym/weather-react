@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import WeatherInfo from "./WeatherInfo";
 
 export default function Weather(props) {
   const [weather, setWeatherData] = useState({ ready: false });
@@ -15,28 +16,6 @@ export default function Weather(props) {
       description: response.data.weather[0].description,
       icon: `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
     });
-  }
-
-  function formattedDate() {
-    let days = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
-    const day = days[weather.date.getDay()];
-    let hours = weather.date.getHours();
-    if (hours < 10) {
-      hours = `0${hours}`;
-    }
-    let minutes = weather.date.getMinutes();
-    if (minutes < 10) {
-      minutes = `0${minutes}`;
-    }
-    return `${day}, ${hours}:${minutes}`;
   }
 
   if (weather.ready) {
@@ -67,31 +46,7 @@ export default function Weather(props) {
             </div>
           </div>
         </form>
-        <div className="current-place">
-          <div className="City">
-            <h1>{weather.city}</h1>
-          </div>
-          <div className="Time">
-            Last updated: <span>{formattedDate()}</span>
-          </div>
-          <div className="text-capitalize">{weather.description}</div>
-          <div className="weather">
-            <div className="row">
-              <div className="col-6">
-                <div>
-                  <img alt="icon" width="60px" src={weather.icon} />
-
-                  <span className="currentTemp">{weather.temperature}</span>
-                  <span className="units">ºC</span>
-                </div>
-              </div>
-              <div className="col-6">
-                <div>Humidity: {weather.humidity}%</div>
-                <div>Wind: {weather.wind} m/sec</div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <WeatherInfo data={weather} />
       </div>
     );
   } else {
